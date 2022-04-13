@@ -32,13 +32,31 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('page_about')}}">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('page_contact')}}">Contact</a></li>
 
+                         {% if not is_granted("ROLE_USER") %}
+                        <li class="nav-item">
+                            <a class="nav-link ppx-lg-3 py-3 py-lg-4" href="{{ path('app_register') }}">S'inscrire</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">Login</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_logout') }}">Logout</a>
+                        </li>
+                        {% endif %}
+
+
                         {#{% for flash_error in app.flashes('verify_email_error') %} {# Flash error depuis register.twig
                         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 
                         {% endfor %}#}
 
                         {% for message in app.flashes('success') %} 
-                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                            <div class="alert alert-success" role="alert">{{ message }}</div>
+                        {% endfor %}
+
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
                         {% endfor %}
 
                     </ul>
