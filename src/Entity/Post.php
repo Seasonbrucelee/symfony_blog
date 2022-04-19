@@ -18,6 +18,9 @@ class Post
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
+     /**
+     * @gedmo\Slug(fields={"title"})
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
