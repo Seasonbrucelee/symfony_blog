@@ -1,38 +1,57 @@
 {% extends 'clean.html.twig' %}
 
-{% block title %}Bienvenue sur mon blog{% endblock %}{# Title comme en HTML qui dans le head qui s'affiche dand l'onglet de mon navigateur #}
-{% block subtitleh %}Toute l'actualité de la danse{% endblock %}{# Sous titre de mon blog #}
+{% block title %}Bienvune sur mon blog{% endblock %}
+{% block subtitleh %}toute l'actualité du surf{% endblock %}
 
 {% block body %}
 
-{#{{ dump(posts) }}#}
-      <!-- Main Content-->
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-8 col-lg-8 col-xl-7">
 
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
+                {% for post in posts %}
 
                     <!-- Post preview-->
-                    {% for post in posts %}
                     <div class="post-preview">
-                    <a href="{{ path('post_view', {slug: post.slug}) }}">
-                        <h2 class="post-title">{{ post.title }}</h2>
-                        <img src="{{ post.image }}" alt="" style="width: 100%">
-                        <h3 class="post-subtitle">{{ post.content | u.truncate(150, '...') | raw }}</h3>
-                    </a>
-                    <p class="post-meta">Rédigé par
-                        <a href="#">{{post.user.email}}</a>
-                        publié {{post.createdAt | ago}}
-                        classé dans {{post.category.name}}
+                        <a href="{{ path('post_view', {slug: post.slug}) }}">
+
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <img src="{{ post.image }}" alt="" style="width: 100%">
+                            <h3 class="post-subtitle">{{ post.content | u.truncate(150, '...') | raw}}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posté par
+                            {{post.user.email}}
+                           - {{post.createdAt | ago}}
+                           <a href="{{ path('app_category', {slug: post.category.slug}) }}">
+                           - classé dans {{post.category.name}}
+                           </a>
                         </p>
                     </div>
-                    <hr>
-                    {% endfor %}
-                   
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
-                </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+
+                {% endfor %}
+                
+                <!-- Pager-->
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-lg-4 col-md-4 mx-auto">
+                <h2>Les anciens articles</h2>
+                
+                {% for oldPost in oldPosts %}
+                    <div class="post-preview">
+                        <a href="{{ path('post_view', {slug: oldPost.slug}) }}">
+                            <h2 class="post-subtitle">{{ oldPost.title }}</h2>
+                        </a>
+                        <p class="post-meta">{{ oldPost.createdAt | ago }}</p>
+                    </div>
+                {% endfor %}
+
             </div>
         </div>
+    </div>
 
 {% endblock %}
