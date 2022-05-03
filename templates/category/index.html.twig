@@ -36,5 +36,15 @@
                 </div>
             </div>
         </div>
-
+      <script>
+      
+       let btdeletes = document.querySelectorAll(".modal-trigger")
+        for(let btdelete of btdeletes) {
+        btdelete.addEventListener("click", function(){
+            document.querySelector(".modal-footer a").href=`/admin/post/delete/${this.dataset.id}`
+            document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${this.dataset.title}"`
+        })
+        }
+      
+      </script>
 {% endblock %}
